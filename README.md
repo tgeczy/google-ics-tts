@@ -54,10 +54,15 @@ GitHub, only when you press it.
 
 ## Building
 
-Needs the Visual Studio 2022 Build Tools and Python 3.
+Needs Visual Studio or its Build Tools with the C++ workload (found with
+vswhere), and Python 3.
 
     src\native\build.cmd          rem builds src\addon\engine\x64 and x86\ics_hts.dll
     python tools\build_addon.py   rem writes build\googleIcsTts-<version>.nvda-addon
+    src\sapi\build.cmd            rem builds build\sapi\x64 and x86\ics_sapi.dll (and the test probe)
+
+The SAPI voice is registered with both regsvr32s from an administrator prompt
+(System32 for x64, SysWOW64 for x86).
 
 The DLLs link the C runtime statically, so nothing else needs installing, and
 they load on Windows 7. The add-on supports NVDA 2023.1 and later, 32- and
@@ -71,6 +76,17 @@ The C front end and converter are checked against the Python reference in
     python tests\test_front.py                        rem labels: every CMUdict word, both accents
     python tests\test_convert.py <eng-usa/voice> ...  rem C and Python .htsvoice are byte-identical
     python tests\test_speak.py <us.htsvoice> <gb.htsvoice>  rem audio is identical sample for sample
+
+The registered SAPI voice is driven through ISpVoice, both architectures and
+both voices: audio, bookmark order and timing, and how quickly an abort stops:
+
+    python tests\test_sapi.py
+
+Nothing committed may contain a path from this machine; check before pushing
+(`--history` checks every commit too):
+
+    python tools\check_paths.py
+    python tests\test_check_paths.py
 
 ## License
 

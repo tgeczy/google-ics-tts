@@ -109,6 +109,7 @@ class HtsEngine:
 			start, end = 0, nsamples
 			if shorten_pauses:
 				a, b = ctypes.c_int(), ctypes.c_int()
-				self._dll.ics_trim_range(self._handle, volume, ctypes.byref(a), ctypes.byref(b))
+				# Measured at full volume: at volume 0 everything would look like silence.
+				self._dll.ics_trim_range(self._handle, 1.0, ctypes.byref(a), ctypes.byref(b))
 				start, end = a.value, b.value
 		return bytes(samples)[start * 2:end * 2]

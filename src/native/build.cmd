@@ -1,6 +1,6 @@
 @echo off
-rem Builds addon\engine\x64\ics_hts.dll and addon\engine\x86\ics_hts.dll with the
-rem VS 2022 Build Tools.  /MT links the C runtime in, so no VC++ redistributable is
+rem Builds addon\engine\x64\ics_hts.dll and addon\engine\x86\ics_hts.dll with
+rem Visual Studio or its Build Tools.  /MT links the C runtime in, so no VC++ redistributable is
 rem needed; x86 is for 32-bit NVDA (2023.x and older, including Windows 7).
 setlocal
 cd /d "%~dp0"
@@ -10,7 +10,7 @@ exit /b 0
 
 :build
 setlocal
-call "C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\VC\Auxiliary\Build\%2" >nul || exit /b 1
+call ..\..\tools\vcvars.cmd %2 || exit /b 1
 if not exist obj\%1 mkdir obj\%1
 if not exist ..\addon\engine\%1 mkdir ..\addon\engine\%1
 cl /nologo /O2 /TC /MT /W3 /D_CRT_SECURE_NO_WARNINGS /I. /Ihts_engine_API /Foobj\%1\ ^
