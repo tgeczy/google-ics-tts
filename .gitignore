@@ -1,0 +1,24 @@
+# Nothing of Google's is ever committed: no APKs, gapps packages, voice data
+# (original or converted), or audio rendered with it.
+*.apk
+*.zip
+*.htsvoice
+*.wav
+/voices/
+/extracted/
+/downloads/
+
+# Build artefacts
+/build/
+native/obj/
+*.obj
+*.dll
+*.exp
+*.lib
+*.exe
+*.nvda-addon
+__pycache__/
+*.pyc
+
+# Local test copies (the build takes cmudict from data/)
+/addon/engine/cmudict.dict
