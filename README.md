@@ -46,6 +46,6 @@ The C front end and converter are checked against the Python reference in
 
 ## License
 
-BSD 2-Clause for this project's code (see `LICENSE`). hts_engine API, the CMU
+BSD 3-Clause for this project's code (see `LICENSE`). hts_engine API, the CMU
 Pronouncing Dictionary and the public-domain NRL rules keep their own terms;
 see `addon/licenses/`.
