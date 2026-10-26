@@ -64,7 +64,9 @@ def _registry_dirs() -> list[str]:
 			except OSError:
 				continue
 			if isinstance(value, str) and value:
-				dirs.append(os.path.join(os.path.expandvars(value), "voices"))
+				# The folder that holds the voices, or the one above it.
+				base = os.path.expandvars(value)
+				dirs += [base, os.path.join(base, "voices")]
 	return dirs
 
 

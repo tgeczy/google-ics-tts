@@ -1,0 +1,30 @@
+Google TTS (Ice Cream Sandwich) for SAPI 5 -- third-party notices
+
+hts_engine API 1.10 (x64\ics_sapi.dll, x86\ics_sapi.dll)
+  Copyright (c) 2001-2015 Nagoya Institute of Technology, Department of
+  Computer Science; 2001-2008 Tokyo Institute of Technology,
+  Interdisciplinary Graduate School of Science and Engineering.
+  Modified BSD license; full text in hts_engine_API.txt.
+  Modified for this voice: two vocoder options (unvoiced noise level,
+  postfilter on voiced frames only), files opened by UTF-8 path, and a
+  small C wrapper, ics_hts.c.
+
+CMU Pronouncing Dictionary (cmudict.dict)
+  Copyright (C) 1993-2015 Carnegie Mellon University.
+  BSD-style license; full text in cmudict.txt. Used unmodified.
+
+NRL letter-to-sound rules (compiled into ics_sapi.dll)
+  From NRL Report 7948 (Elovitz, Johnson, McHugh and Shore, 1976), a work
+  of the US Government, as transcribed in John A. Wasser's public-domain
+  english.c (1985). Public domain.
+
+miniz 3.1.2 (IcsTtsSettings.exe, which unpacks GoogleTTS.apk)
+  Copyright 2013-2014 RAD Game Tools and Valve Software; Copyright 2010-2014
+  Rich Geldreich and Tenacious Software LLC. MIT license; full text in
+  miniz.txt. Used unmodified.
+
+Voices
+  No voice data is included. The voices belong to Google: they are read
+  from an Android 4.0 (Ice Cream Sandwich) GoogleTTS.apk that you provide,
+  or from the Ice Cream Sandwich gapps package on SourceForge, and converted
+  on your own computer.

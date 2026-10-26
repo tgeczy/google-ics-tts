@@ -1,0 +1,56 @@
+// settings_app.rc -- the settings app's one dialog. Standard controls only,
+// each with a label before it, so every screen reader reads it.
+#include <windows.h>
+#include <commctrl.h>
+#include "resource.h"
+#include "version.h"
+
+CREATEPROCESS_MANIFEST_RESOURCE_ID RT_MANIFEST "settings_app.manifest"
+
+IDD_MAIN DIALOGEX 0, 0, 320, 268
+STYLE DS_MODALFRAME | DS_CENTER | DS_SHELLFONT | WS_POPUP | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX
+CAPTION "Google TTS (Ice Cream Sandwich) voice settings"
+FONT 9, "MS Shell Dlg 2"
+BEGIN
+    LTEXT           "&Installed voices:", -1, 7, 7, 306, 9
+    EDITTEXT        IDC_VOICES, 7, 17, 306, 44, ES_MULTILINE | ES_READONLY | ES_AUTOVSCROLL | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "&Download from SourceForge", IDC_DOWNLOAD, 7, 67, 150, 14
+    PUSHBUTTON      "Import from &file...", IDC_IMPORT, 163, 67, 150, 14
+    PUSHBUTTON      "Copy the voices from the &NVDA add-on", IDC_COPY_NVDA, 7, 85, 306, 14
+    LTEXT           "&Your own voices folder (optional):", -1, 7, 107, 306, 9
+    EDITTEXT        IDC_FOLDER, 7, 117, 186, 14, ES_AUTOHSCROLL
+    PUSHBUTTON      "&Browse...", IDC_BROWSE, 199, 117, 55, 14
+    PUSHBUTTON      "C&lear", IDC_CLEAR_FOLDER, 258, 117, 55, 14
+    AUTOCHECKBOX    "Shorten &pauses", IDC_SHORTEN, 7, 139, 306, 10
+    PUSHBUTTON      "Check for &updates", IDC_UPDATES, 7, 155, 150, 14
+    LTEXT           "&Status:", -1, 7, 177, 306, 9
+    EDITTEXT        IDC_STATUS, 7, 187, 306, 28, ES_MULTILINE | ES_READONLY | ES_AUTOVSCROLL | WS_TABSTOP
+    LTEXT           "Progress:", -1, 7, 220, 306, 9
+    CONTROL         "", IDC_PROGRESS, PROGRESS_CLASS, WS_BORDER, 7, 230, 306, 10
+    PUSHBUTTON      "S&top", IDC_STOP, 199, 248, 55, 14, WS_DISABLED
+    DEFPUSHBUTTON   "Close", IDCANCEL, 258, 248, 55, 14
+END
+
+VS_VERSION_INFO VERSIONINFO
+FILEVERSION ICS_VERSION_COMMA
+PRODUCTVERSION ICS_VERSION_COMMA
+FILEOS VOS_NT_WINDOWS32
+FILETYPE VFT_APP
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904B0"
+        BEGIN
+            VALUE "CompanyName", "tgeczy"
+            VALUE "FileDescription", "Google TTS (Ice Cream Sandwich) voice settings"
+            VALUE "FileVersion", ICS_VERSION_A
+            VALUE "ProductName", "Google TTS (Ice Cream Sandwich) for SAPI 5"
+            VALUE "ProductVersion", ICS_VERSION_A
+            VALUE "LegalCopyright", "Copyright (c) 2026 Tamas Geczy. BSD-3-Clause."
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END

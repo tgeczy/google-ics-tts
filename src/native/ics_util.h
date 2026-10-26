@@ -4,7 +4,15 @@
 
 #include <stdio.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 FILE *ics_fopen(const char *utf8_path, const char *mode);
 int ics_remove(const char *utf8_path);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

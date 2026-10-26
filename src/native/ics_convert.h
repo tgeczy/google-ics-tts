@@ -9,8 +9,16 @@
 #define ICSC_ERR_WRITE 2
 #define ICSC_ERR_MEMORY 3
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /* Convert the bytes of assets/<lang>/voice into an hts_engine API .htsvoice
    at out_path. source_name goes into the header's COMMENT line. */
 int icsc_convert(const unsigned char *data, size_t len, const char *out_path, const char *source_name);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

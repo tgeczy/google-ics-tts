@@ -13,7 +13,7 @@ CMU Pronouncing Dictionary (engine\cmudict.dict)
   Copyright (C) 1993-2015 Carnegie Mellon University.
   BSD-style license; full text in cmudict.txt. Used unmodified.
 
-NRL letter-to-sound rules (synthDrivers\icsTts\_nrl_rules.py)
+NRL letter-to-sound rules (compiled into ics_hts.dll)
   From NRL Report 7948 (Elovitz, Johnson, McHugh and Shore, 1976), a work
   of the US Government, as transcribed in John A. Wasser's public-domain
   english.c (1985). Public domain.

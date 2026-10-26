@@ -50,6 +50,32 @@ std::wstring common_voices_dir()
 	return base.empty() ? base : base + L"\\" + kSharedName + L"\\voices";
 }
 
+std::wstring nvda_voices_dir()
+{
+	std::wstring base = known_folder(FOLDERID_RoamingAppData);
+	return base.empty() ? base : base + L"\\nvda\\googleIcsTts\\voices";
+}
+
+static bool writable(const std::wstring &dir)
+{
+	if (dir.empty())
+		return false;
+	SHCreateDirectoryExW(nullptr, dir.c_str(), nullptr);
+	std::wstring probe = dir + L"\\.write-test";
+	HANDLE f = CreateFileW(probe.c_str(), GENERIC_WRITE, 0, nullptr, CREATE_ALWAYS,
+		FILE_ATTRIBUTE_TEMPORARY | FILE_FLAG_DELETE_ON_CLOSE, nullptr);
+	if (f == INVALID_HANDLE_VALUE)
+		return false;
+	CloseHandle(f);
+	return true;
+}
+
+std::wstring import_dir()
+{
+	std::wstring common = common_voices_dir();
+	return writable(common) ? common : user_voices_dir();
+}
+
 static void registry_dirs(HKEY root, std::vector<std::wstring> &out)
 {
 	for (REGSAM view : {KEY_WOW64_64KEY, KEY_WOW64_32KEY}) {
@@ -62,8 +88,11 @@ static void registry_dirs(HKEY root, std::vector<std::wstring> &out)
 				&& (type == REG_SZ || type == REG_EXPAND_SZ) && size > sizeof(wchar_t)) {
 			value[size / sizeof(wchar_t) - 1] = L'\0';
 			wchar_t expanded[MAX_PATH * 2];
-			if (ExpandEnvironmentStringsW(value, expanded, MAX_PATH * 2))
+			if (ExpandEnvironmentStringsW(value, expanded, MAX_PATH * 2)) {
+				// The folder that holds the voices, or the one above it.
+				out.push_back(expanded);
 				out.push_back(std::wstring(expanded) + L"\\voices");
+			}
 		}
 		RegCloseKey(key);
 	}
@@ -74,9 +103,7 @@ std::vector<std::wstring> voice_search_dirs()
 	std::vector<std::wstring> dirs;
 	registry_dirs(HKEY_CURRENT_USER, dirs);
 	dirs.push_back(user_voices_dir());
-	std::wstring roaming = known_folder(FOLDERID_RoamingAppData);
-	if (!roaming.empty())
-		dirs.push_back(roaming + L"\\nvda\\googleIcsTts\\voices");  // the NVDA add-on's default
+	dirs.push_back(nvda_voices_dir());
 	registry_dirs(HKEY_LOCAL_MACHINE, dirs);
 	dirs.push_back(common_voices_dir());
 	dirs.push_back(module_dir());
