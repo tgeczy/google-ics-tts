@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import os
 import queue
-import struct
 import threading
 from collections import OrderedDict
 
@@ -14,22 +13,8 @@ from logHandler import log
 from speech.commands import BreakCommand, IndexCommand, PitchCommand, RateCommand, VolumeCommand
 from synthDriverHandler import VoiceInfo, synthDoneSpeaking, synthIndexReached
 
+from . import _paths
 from ._engine import HtsEngine, split_sentences
-
-_addonDir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-_ENGINE_DIR = os.path.join(_addonDir, "engine")
-#: 32-bit NVDA (2023.x and older, the last on Windows 7) needs the x86 build.
-_DLL = os.path.join(_ENGINE_DIR, "x64" if struct.calcsize("P") == 8 else "x86", "ics_hts.dll")
-_DICT = os.path.join(_ENGINE_DIR, "cmudict.dict")
-#: id -> (name, language, voice file, front-end accent)
-_VOICES = OrderedDict([
-	("en-us", ("English US (Female)", "en_US", "ics_en_us.htsvoice", "us")),
-	("en-gb", ("English GB (Male, RP)", "en_GB", "ics_en_gb.htsvoice", "gb")),
-])
-
-
-def _installedVoices() -> OrderedDict:
-	return OrderedDict((k, v) for k, v in _VOICES.items() if os.path.isfile(os.path.join(_ENGINE_DIR, v[2])))
 
 
 #: Carries an index callback; feeding zero bytes to WASAPI is not relied on.
@@ -77,7 +62,8 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 
 	@classmethod
 	def check(cls):
-		return os.path.isfile(_DLL) and os.path.isfile(_DICT) and bool(_installedVoices())
+		# Listed even before voices are imported, so choosing it can offer the importer.
+		return os.path.isfile(_paths.DLL_PATH) and os.path.isfile(_paths.DICT_PATH)
 
 	def __init__(self):
 		super().__init__()
@@ -88,7 +74,14 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 		self._volume = 100
 		self._generation = 0
 		self._playing = False
-		self._voice = next(iter(_installedVoices()))
+		voices = _paths.installed_voices()
+		if not voices:
+			import wx
+			from . import _gui
+
+			wx.CallAfter(_gui.prompt_missing_voices)
+			raise RuntimeError("no Ice Cream Sandwich voices are imported")
+		self._voice = next(iter(voices))
 		self._engine = self._loadEngine(self._voice)
 		self._player = nvwave.WavePlayer(
 			channels=1,
@@ -196,8 +189,8 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 
 	@staticmethod
 	def _loadEngine(voiceId: str) -> HtsEngine:
-		_, _, voiceFile, accent = _VOICES[voiceId]
-		engine = HtsEngine(_DLL, os.path.join(_ENGINE_DIR, voiceFile), _DICT, accent)
+		accent = _paths.VOICES[voiceId][3]
+		engine = HtsEngine(_paths.DLL_PATH, _paths.find_voice(voiceId), _paths.DICT_PATH, accent)
 		engine.start()
 		return engine
 
@@ -205,7 +198,7 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 		return self._voice
 
 	def _set_voice(self, value: str):
-		if value == self._voice or value not in _installedVoices():
+		if value == self._voice or not _paths.find_voice(value):
 			return
 		self.cancel()
 		old = self._engine
@@ -214,8 +207,10 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 		old.shutdown()
 
 	def _getAvailableVoices(self) -> OrderedDict[str, VoiceInfo]:
+		installed = _paths.installed_voices()
 		return OrderedDict(
-			(k, VoiceInfo(k, name, language=lang)) for k, (name, lang, _, _) in _installedVoices().items())
+			(k, VoiceInfo(k, name, language=lang))
+			for k, (name, lang, _, _) in _paths.VOICES.items() if k in installed)
 
 	def _get_rate(self) -> int:
 		return self._rate

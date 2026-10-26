@@ -21,6 +21,11 @@ FILES = {
     "engine/cmudict.dict": "data/cmudict.dict",
     "synthDrivers/icsTts/__init__.py": "addon/synthDrivers/icsTts/__init__.py",
     "synthDrivers/icsTts/_engine.py": "addon/synthDrivers/icsTts/_engine.py",
+    "synthDrivers/icsTts/_paths.py": "addon/synthDrivers/icsTts/_paths.py",
+    "synthDrivers/icsTts/_importer.py": "addon/synthDrivers/icsTts/_importer.py",
+    "synthDrivers/icsTts/_updates.py": "addon/synthDrivers/icsTts/_updates.py",
+    "synthDrivers/icsTts/_gui.py": "addon/synthDrivers/icsTts/_gui.py",
+    "globalPlugins/googleIcsTts.py": "addon/globalPlugins/googleIcsTts.py",
 }
 
 
