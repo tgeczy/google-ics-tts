@@ -1,9 +1,9 @@
 """Check that the C speech path matches the reference path sample for sample.
 
-Reference: tools/reference front end -> labels -> ics_synth -> Python trim.
+Reference: tests/reference front end -> labels -> ics_synth -> Python trim.
 C path: HtsEngine.synthesize (ics_speak + ics_trim_range).
 
-Usage: python tools/test_speak.py <us.htsvoice> [<gb.htsvoice>]
+Usage: python tests/test_speak.py <us.htsvoice> [<gb.htsvoice>]
 """
 import array
 import ctypes
@@ -16,10 +16,10 @@ import types
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DICT = os.path.join(ROOT, "data", "cmudict.dict")
-DLL = os.path.join(ROOT, "addon", "engine", "x64" if struct.calcsize("P") == 8 else "x86", "ics_hts.dll")
+DLL = os.path.join(ROOT, "src", "addon", "engine", "x64" if struct.calcsize("P") == 8 else "x86", "ics_hts.dll")
 
-for name, path in (("icsref", os.path.join(ROOT, "tools", "reference")),
-                   ("icsTts", os.path.join(ROOT, "addon", "synthDrivers", "icsTts"))):
+for name, path in (("icsref", os.path.join(ROOT, "tests", "reference")),
+                   ("icsTts", os.path.join(ROOT, "src", "addon", "synthDrivers", "icsTts"))):
     pkg = types.ModuleType(name)
     pkg.__path__ = [path]
     sys.modules[name] = pkg

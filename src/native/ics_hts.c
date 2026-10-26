@@ -4,10 +4,10 @@
 #include <string.h>
 #include <math.h>
 #include "HTS_engine.h"
-#include "ics_front.h"
+#include "ics_hts.h"
 #include "ics_convert.h"
 
-#define EXPORT __declspec(dllexport)
+#define EXPORT ICS_EXPORT
 
 extern double HTS_ics_noise_gain;
 extern int HTS_ics_postfilter_voiced_only;

@@ -14,7 +14,7 @@ call "C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\VC\Auxiliar
 if not exist obj\%1 mkdir obj\%1
 if not exist ..\addon\engine\%1 mkdir ..\addon\engine\%1
 cl /nologo /O2 /TC /MT /W3 /D_CRT_SECURE_NO_WARNINGS /I. /Ihts_engine_API /Foobj\%1\ ^
-   ics_hts.c ics_front.c ics_convert.c hts_engine_API\HTS_audio.c hts_engine_API\HTS_engine.c hts_engine_API\HTS_gstream.c ^
+   ics_hts.c ics_front.c ics_convert.c ics_util.c hts_engine_API\HTS_audio.c hts_engine_API\HTS_engine.c hts_engine_API\HTS_gstream.c ^
    hts_engine_API\HTS_label.c hts_engine_API\HTS_misc.c hts_engine_API\HTS_model.c ^
    hts_engine_API\HTS_pstream.c hts_engine_API\HTS_sstream.c hts_engine_API\HTS_vocoder.c ^
    /LD /Fe:..\addon\engine\%1\ics_hts.dll /link /NOLOGO winmm.lib || exit /b 1

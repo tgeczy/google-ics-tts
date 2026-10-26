@@ -1,9 +1,10 @@
 /* ics_front.c -- text to Flint full-context labels; see ics_front.h.
  *
- * Kept line-for-line equivalent to tools/reference/_icsfront.py and _nrl.py;
- * tools/test_front.py compares the two over the dictionary and a sentence set.
+ * Kept line-for-line equivalent to tests/reference/_icsfront.py and _nrl.py;
+ * tests/test_front.py compares the two over the dictionary and a sentence set.
  */
 #include "ics_front.h"
+#include "ics_util.h"
 
 #include <ctype.h>
 #include <stdio.h>
@@ -269,7 +270,7 @@ static void lex_add(IcsLexicon *lex, const char *word, const char *arpa)
 
 IcsLexicon *icsf_lexicon_load(const char *path, int accent)
 {
-	FILE *f = fopen(path, "rb");
+	FILE *f = ics_fopen(path, "rb");
 	IcsLexicon *lex;
 	long size;
 	size_t lines = 0, cap, i;

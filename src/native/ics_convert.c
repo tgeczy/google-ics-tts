@@ -2,7 +2,7 @@
  * assets/<lang>/voice) to an hts_engine API 1.10 .htsvoice.
  *
  * Port of tools/flint2htsvoice.py (with flint_parser.py and flint_trees.py);
- * tools/test_convert.py checks the two give byte-identical files.
+ * tests/test_convert.py checks the two give byte-identical files.
  *
  * Voice layout, all little-endian:
  *   text header with <SAMPLE-RATE>, <FRAME-PERIOD>, <FREQ-WARPING>, <STAGE> ...
@@ -19,6 +19,7 @@
  *   <WINDOW-COEFFS> text
  */
 #include "ics_convert.h"
+#include "ics_util.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -591,7 +592,7 @@ int icsc_convert(const unsigned char *data, size_t len, const char *out_path, co
 	put(&out, d.p, d.n);
 	if (out.failed)
 		goto oom;
-	f = fopen(out_path, "wb");
+	f = ics_fopen(out_path, "wb");
 	if (!f) {
 		rc = ICSC_ERR_WRITE;
 		goto done;
@@ -600,7 +601,7 @@ int icsc_convert(const unsigned char *data, size_t len, const char *out_path, co
 	if (fclose(f) != 0)
 		rc = ICSC_ERR_WRITE;
 	if (rc != ICSC_OK)
-		remove(out_path);
+		ics_remove(out_path);
 	goto done;
 oom:
 	rc = ICSC_ERR_MEMORY;

@@ -6,7 +6,8 @@ hts_engine API 1.10 (engine\x64\ics_hts.dll, engine\x86\ics_hts.dll)
   Interdisciplinary Graduate School of Science and Engineering.
   Modified BSD license; full text in hts_engine_API.txt.
   Modified for this add-on: two vocoder options (unvoiced noise level,
-  postfilter on voiced frames only) and a small C wrapper, ics_hts.c.
+  postfilter on voiced frames only), files opened by UTF-8 path, and a
+  small C wrapper, ics_hts.c.
 
 CMU Pronouncing Dictionary (engine\cmudict.dict)
   Copyright (C) 1993-2015 Carnegie Mellon University.

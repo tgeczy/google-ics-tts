@@ -1,7 +1,7 @@
 """Check the C front end (ics_hts.dll) against the Python reference front end.
 
 Compares labels for every CMUdict word and a set of sentences, in both
-accents. Usage: python tools/test_front.py [--quick]
+accents. Usage: python tests/test_front.py [--quick]
 """
 import ctypes
 import os
@@ -12,8 +12,8 @@ import types
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DICT = os.path.join(ROOT, "data", "cmudict.dict")
-DLL = os.path.join(ROOT, "addon", "engine", "x64" if struct.calcsize("P") == 8 else "x86", "ics_hts.dll")
-REF_DIR = os.path.join(ROOT, "tools", "reference")
+DLL = os.path.join(ROOT, "src", "addon", "engine", "x64" if struct.calcsize("P") == 8 else "x86", "ics_hts.dll")
+REF_DIR = os.path.join(ROOT, "tests", "reference")
 
 pkg = types.ModuleType("icsref")
 pkg.__path__ = [REF_DIR]
@@ -64,7 +64,7 @@ def main():
     failures = 0
     for accent, code in (("us", 0), ("gb", 1)):
         pylex = ref.Lexicon(DICT, accent)
-        clex = dll.ics_lexicon_open(DICT.encode("mbcs"), code)
+        clex = dll.ics_lexicon_open(DICT.encode("utf-8"), code)
         checked = 0
         cases = [(t, f) for t in SENTENCES for f in ("s", None)] + [(w, "s") for w in words + oov]
         for text, final in cases:

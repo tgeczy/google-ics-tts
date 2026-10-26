@@ -70,6 +70,9 @@ def _registry_dirs() -> list[str]:
 
 def search_dirs() -> list[str]:
 	dirs = [user_voices_dir()] + _registry_dirs()
+	app_data = os.environ.get("APPDATA")
+	if app_data:
+		dirs.append(os.path.join(app_data, SHARED_NAME, "voices"))
 	program_data = os.environ.get("ProgramData")
 	if program_data:
 		dirs.append(os.path.join(program_data, SHARED_NAME, "voices"))

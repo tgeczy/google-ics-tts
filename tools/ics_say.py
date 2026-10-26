@@ -12,8 +12,8 @@ import types
 import wave
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-PKG_DIR = os.path.join(ROOT, "addon", "synthDrivers", "icsTts")
-ENGINE_DIR = os.path.join(ROOT, "addon", "engine")
+PKG_DIR = os.path.join(ROOT, "src", "addon", "synthDrivers", "icsTts")
+ENGINE_DIR = os.path.join(ROOT, "src", "addon", "engine")
 
 # Load the add-on's modules without its NVDA-only __init__.
 pkg = types.ModuleType("icsTts")

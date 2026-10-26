@@ -42,17 +42,21 @@ GitHub, only when you press it.
 
 ## Layout
 
-- `addon/` - the NVDA add-on (driver, front end, NRL rules, notices)
-- `native/` - `ics_hts.c` and the vendored hts_engine API; `build.cmd` builds
-  x86 and x64 DLLs with the Visual Studio 2022 Build Tools
-- `tools/` - the voice-format decoders, the converter and test utilities
+- `src/addon/` - the NVDA add-on: driver, voice importer, update check, notices
+- `src/native/` - the shared C engine: hts_engine API (vendored), the text front
+  end (`ics_front.c`), the voice converter (`ics_convert.c`) and their API
+  (`ics_hts.h`); miniz is vendored under `third_party/`
+- `src/sapi/` - the SAPI 5 voice and its settings app
+- `tests/` - parity tests against the Python reference in `tests/reference/`
+- `tools/` - voice-format decoders, the Python converter, rule generator, build
+  and development utilities
 - `data/` - the CMU Pronouncing Dictionary
 
 ## Building
 
 Needs the Visual Studio 2022 Build Tools and Python 3.
 
-    native\build.cmd              rem builds addon\engine\x64 and x86\ics_hts.dll
+    src\native\build.cmd          rem builds src\addon\engine\x64 and x86\ics_hts.dll
     python tools\build_addon.py   rem writes build\googleIcsTts-<version>.nvda-addon
 
 The DLLs link the C runtime statically, so nothing else needs installing, and
@@ -62,14 +66,14 @@ they load on Windows 7. The add-on supports NVDA 2023.1 and later, 32- and
 ## Tests
 
 The C front end and converter are checked against the Python reference in
-`tools/reference/`:
+`tests/reference/`:
 
-    python tools\test_front.py                        rem labels: every CMUdict word, both accents
-    python tools\test_convert.py <eng-usa/voice> ...  rem C and Python .htsvoice are byte-identical
-    python tools\test_speak.py <us.htsvoice> <gb.htsvoice>  rem audio is identical sample for sample
+    python tests\test_front.py                        rem labels: every CMUdict word, both accents
+    python tests\test_convert.py <eng-usa/voice> ...  rem C and Python .htsvoice are byte-identical
+    python tests\test_speak.py <us.htsvoice> <gb.htsvoice>  rem audio is identical sample for sample
 
 ## License
 
 BSD 3-Clause for this project's code (see `LICENSE`). hts_engine API, the CMU
 Pronouncing Dictionary and the public-domain NRL rules keep their own terms;
-see `addon/licenses/`.
+see `src/addon/licenses/`.

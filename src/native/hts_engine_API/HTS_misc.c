@@ -61,6 +61,7 @@ HTS_MISC_C_START;
 
 /* hts_engine libraries */
 #include "HTS_hidden.h"
+#include "ics_util.h"
 
 #ifdef FESTIVAL
 #include "EST_walloc.h"
@@ -81,7 +82,7 @@ HTS_File *HTS_fopen_from_fn(const char *name, const char *opt)
    HTS_File *fp = (HTS_File *) HTS_calloc(1, sizeof(HTS_File));
 
    fp->type = HTS_FILE;
-   fp->pointer = (void *) fopen(name, opt);
+   fp->pointer = (void *) ics_fopen(name, opt);  /* UTF-8 paths, ics_util.c */
 
    if (fp->pointer == NULL) {
       HTS_error(0, "HTS_fopen: Cannot open %s.\n", name);

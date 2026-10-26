@@ -26,7 +26,7 @@ def main():
     a = ap.parse_args()
 
     pkg = types.ModuleType("synthDrivers")
-    pkg.__path__ = [os.path.join(ROOT, "addon", "synthDrivers")]
+    pkg.__path__ = [os.path.join(ROOT, "src", "addon", "synthDrivers")]
     sys.modules["synthDrivers"] = pkg
     os.environ["PANTHERA_TEST_CONFIG"] = os.path.join(tempfile.gettempdir(), "icsTts-test-config")
     spec = importlib.util.spec_from_file_location("nvda_fakes", a.fakes)

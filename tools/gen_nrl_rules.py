@@ -1,4 +1,4 @@
-"""Generate _nrl_rules.py (Python) and native/nrl_rules.inc (C) from Wasser's english.c.
+"""Generate _nrl_rules.py (Python) and src/native/nrl_rules.inc (C) from Wasser's english.c.
 
 Usage: python gen_nrl_rules.py <path to english.c>
 """
@@ -7,8 +7,8 @@ import re
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-OUT = os.path.join(ROOT, "tools", "reference", "_nrl_rules.py")
-OUT_C = os.path.join(ROOT, "native", "nrl_rules.inc")
+OUT = os.path.join(ROOT, "tests", "reference", "_nrl_rules.py")
+OUT_C = os.path.join(ROOT, "src", "native", "nrl_rules.inc")
 NAMES = {"Anything": "", "Nothing": " ", "Pause": " ", "Silent": ""}
 ITEM = r'(Anything|Nothing|Pause|Silent|"(?:[^"\\]|\\.)*")'
 RULE = re.compile(r"\{\s*%s\s*,\s*(0|%s)\s*,\s*%s\s*,\s*%s\s*\}" % (ITEM, ITEM, ITEM, ITEM))

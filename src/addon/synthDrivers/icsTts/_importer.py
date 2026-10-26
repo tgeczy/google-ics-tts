@@ -104,7 +104,7 @@ def install(voices: dict[str, bytes], dest: str | None = None, progress=None) ->
 			progress(70 + 25 * n // len(voices), "Converting %s" % _paths.VOICES[voice_id][0])
 		target = os.path.join(dest, name)
 		tmp = target + ".tmp"
-		rc = convert(data, len(data), tmp.encode("mbcs"), b"voice")
+		rc = convert(data, len(data), tmp.encode("utf-8"), b"voice")
 		if rc != 0:
 			try:
 				os.remove(tmp)

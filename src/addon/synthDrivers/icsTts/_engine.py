@@ -60,10 +60,10 @@ class HtsEngine:
 		dll.ics_get_samples.argtypes = [ctypes.c_void_p, ctypes.POINTER(ctypes.c_short), ctypes.c_double]
 		dll.ics_trim_range.argtypes = [ctypes.c_void_p, ctypes.c_double,
 			ctypes.POINTER(ctypes.c_int), ctypes.POINTER(ctypes.c_int)]
-		lexicon = dll.ics_lexicon_open(self._dict_path.encode("mbcs"), ACCENTS[self._accent])
+		lexicon = dll.ics_lexicon_open(self._dict_path.encode("utf-8"), ACCENTS[self._accent])
 		if not lexicon:
 			raise EngineError("could not load dictionary %s" % self._dict_path)
-		handle = dll.ics_open(self._voice_path.encode("mbcs"))
+		handle = dll.ics_open(self._voice_path.encode("utf-8"))
 		if not handle:
 			dll.ics_lexicon_close(lexicon)
 			raise EngineError("could not load voice %s" % self._voice_path)

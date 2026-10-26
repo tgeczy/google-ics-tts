@@ -10,7 +10,8 @@
 
 # Build artefacts
 /build/
-native/obj/
+src/native/obj/
+src/sapi/obj/
 *.obj
 *.dll
 *.exp
@@ -21,4 +22,4 @@ __pycache__/
 *.pyc
 
 # Local test copies (the build takes cmudict from data/)
-/addon/engine/cmudict.dict
+/src/addon/engine/cmudict.dict

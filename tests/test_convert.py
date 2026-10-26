@@ -1,6 +1,6 @@
 """Check that the C converter (ics_convert_voice) and flint2htsvoice.py agree byte for byte.
 
-Usage: python tools/test_convert.py <flint voice> [<flint voice> ...]
+Usage: python tests/test_convert.py <flint voice> [<flint voice> ...]
 (the voice files are assets/eng-usa/voice and assets/eng-gbr/voice from the APK)
 """
 import ctypes
@@ -12,7 +12,7 @@ import sys
 import tempfile
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DLL = os.path.join(ROOT, "addon", "engine", "x64" if struct.calcsize("P") == 8 else "x86", "ics_hts.dll")
+DLL = os.path.join(ROOT, "src", "addon", "engine", "x64" if struct.calcsize("P") == 8 else "x86", "ics_hts.dll")
 
 
 def sha(path):
@@ -30,7 +30,7 @@ def main():
             subprocess.run([sys.executable, "-I", os.path.join(ROOT, "tools", "flint2htsvoice.py"), voice, py_out],
                            check=True, stdout=subprocess.DEVNULL)
             data = open(voice, "rb").read()
-            rc = dll.ics_convert_voice(data, len(data), c_out.encode("mbcs"), os.path.basename(voice).encode())
+            rc = dll.ics_convert_voice(data, len(data), c_out.encode("utf-8"), os.path.basename(voice).encode())
             if rc != 0:
                 print("C converter failed with", rc, "on", voice)
                 failures += 1

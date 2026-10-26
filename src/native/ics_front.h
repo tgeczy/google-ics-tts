@@ -1,6 +1,6 @@
 /* ics_front.h -- text to Flint (Android 4.0 Google TTS) full-context labels.
  *
- * A port of the add-on's reference front end (tools/reference/_icsfront.py):
+ * A port of the add-on's reference front end (tests/reference/_icsfront.py):
  * CMUdict pronunciations mapped onto the voice's phone set (General American
  * for eng-usa, RP for eng-gbr), NRL letter-to-sound rules for unknown words,
  * syllabification by the voice's own phonotactics, and the label fields from
