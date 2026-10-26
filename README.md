@@ -14,7 +14,31 @@ Dictionary and the NRL letter-to-sound rules, with Flint's own label format.
 Android 4.0 `GoogleTTS.apk`, or an Ice Cream Sandwich gapps package that
 contains one, and the voices are converted on your own computer.
 
-Status: work in progress.
+Status: the NVDA add-on is in testing; the SAPI 5 voice is next.
+
+## Using it with NVDA
+
+1. Install `googleIcsTts-<version>.nvda-addon` from the
+   [releases](https://github.com/tgeczy/google-ics-tts/releases) and restart NVDA.
+2. Open NVDA menu > Tools > **Google TTS (Ice Cream Sandwich) voices**, then either
+   - **Download the voices from SourceForge**: reads only GoogleTTS.apk (about
+     4 MB) out of the Ice Cream Sandwich gapps package
+     `gapps-ics-20120429-signed.zip`, or
+   - **Import from a GoogleTTS.apk or gapps file**: any Android 4.0 GoogleTTS.apk,
+     or a gapps package containing it.
+
+   Each voice is checked against the known Android 4.0 voice before it is
+   converted. Voices are stored in your NVDA configuration folder
+   (`googleIcsTts\voices`), so add-on updates keep them.
+3. Choose **Google TTS (Ice Cream Sandwich)** in NVDA's Select Synthesizer
+   dialog (NVDA+Ctrl+S). Two voices: English US (female) and English GB (male, RP).
+
+Voice settings include NVDA's rate boost and **Shorten pauses**, which trims the
+silence between the pieces NVDA speaks.
+
+Works with NVDA 2023.1 and later, 32- and 64-bit, including Windows 7 with NVDA
+2023.3. **Check for updates** in the same dialog looks for a newer release on
+GitHub, only when you press it.
 
 ## Layout
 

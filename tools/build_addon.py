@@ -13,6 +13,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 #: path in the package -> source path relative to the repository
 FILES = {
     "manifest.ini": "addon/manifest.ini",
+    "licenses/LICENSE.txt": "LICENSE",
     "licenses/NOTICES.txt": "addon/licenses/NOTICES.txt",
     "licenses/hts_engine_API.txt": "addon/licenses/hts_engine_API.txt",
     "licenses/cmudict.txt": "addon/licenses/cmudict.txt",
